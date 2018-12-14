@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+#Folders
+[Bb]uild/
+[Oo]ut/
+WhatsInTheBox/[Dd]ebug
+WhatsInTheBox/WhatsInTheBox/[Oo]ut
+WhatsInTheBox/WhatsInTheBox/[Dd]ebug
+WhatsInTheBox/WhatsInTheBox/[Bb]uild
