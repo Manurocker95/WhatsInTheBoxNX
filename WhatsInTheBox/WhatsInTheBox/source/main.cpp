@@ -7,6 +7,8 @@
 #include "Colors.h"
 #include "Settings.h"
 #include "SceneManager.hpp"
+#include <sys\stat.h>
+#include "Filepaths.h"
 
 // Main program entrypoint
 int main(int argc, char* argv[])
@@ -14,6 +16,9 @@ int main(int argc, char* argv[])
 	consoleInit(NULL);
 	plInitialize();
 	romfsInit();
+
+	mkdir(DATA_FOLDER, 0777);
+
 	SDL_Helper * helper = new SDL_Helper();
 	helper->SDL_HelperInit();
 	

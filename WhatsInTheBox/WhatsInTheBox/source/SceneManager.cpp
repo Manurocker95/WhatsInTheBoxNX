@@ -3,6 +3,10 @@
 #include "GameScreen.hpp"
 #include "LoadingScreen.hpp"
 #include "Colors.h"
+#include "Filepaths.h"
+
+#include <fstream>
+#include <sstream>
 
 SceneManager * SceneManager::instance = NULL;
 
@@ -19,13 +23,27 @@ void SceneManager::Start(SDL_Helper * helper)
 {
 	this->m_helper = helper;
 	this->m_out = false;
+	this->m_taps = 0; 
 	ReadData();
 }
 
 // We read the data from our .sav
 void SceneManager::ReadData()
 {
-	this->m_times_we_have_run_the_program = 1;
+	std::ifstream myReadFile(DATA_FILE);
+
+	if (myReadFile)
+	{
+		myReadFile >> m_taps;
+		m_actualScene = new SplashScreen();
+	}
+	else
+	{
+		std::ofstream outfile(DATA_FILE);
+		outfile << m_taps;
+		outfile.close();
+	}
+
 	this->m_actualScene = new SplashScreen();
 	this->m_actualScene->Start(m_helper);
 }
@@ -43,7 +61,7 @@ void SceneManager::SetActualScene(SCENES _scene)
 		this->m_actualScene = new SplashScreen();
 		break;
 	case GAME:
-		m_actualScene = new GameScreen(0);
+		m_actualScene = new GameScreen(m_taps);
 		break;
 	}
 
@@ -75,8 +93,12 @@ bool SceneManager::IsOut()
 }
 
 // Simple exiting
-void SceneManager::ExitGame()
+void SceneManager::ExitGame(int _taps)
 {
+	std::ofstream outfile(DATA_FILE);
+	outfile << _taps;
+	outfile.close();
+
 	this->m_out = true;
 }
 
@@ -96,14 +118,6 @@ void SceneManager::CheckInputs()
 	u64 kHeld = hidKeysHeld(CONTROLLER_P1_AUTO);
 
 	this->m_actualScene->CheckInputs(kDown, kHeld);
-}
-
-// We save and exit the program
-void SceneManager::SaveDataAndExit()
-{
-	this->m_times_we_have_run_the_program++;
-
-	this->m_out = true;
 }
 
 void SceneManager::Exit()

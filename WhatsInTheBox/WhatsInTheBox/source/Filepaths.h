@@ -3,7 +3,8 @@
 #define _FILEPATHS_HPP_
 
 // save data
-#define DATA_FILE "sdmc:/switch/WhatsInTheBox/data.sav"
+#define DATA_FOLDER "sdmc:/WITB/"
+#define DATA_FILE "sdmc:/WITB/data.sav"
 
 /* Sounds */
 #define SND_BGM_GAME  "romfs:/resources/Sounds/Music/game.wav"

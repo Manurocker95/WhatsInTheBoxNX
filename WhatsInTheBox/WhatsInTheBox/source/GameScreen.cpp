@@ -9,7 +9,7 @@ GameScreen::GameScreen(int _taps) : Scene()
 {
 	this->m_taps = _taps;
 	this->m_changeScene = false;
-	this->m_tapsStr = "Taps: 0";
+	this->m_tapsStr = "Taps: " + std::to_string(this->m_taps);
 	this->m_currentBackground = 0;
 
 }
@@ -131,7 +131,7 @@ void GameScreen::CheckInputs(u64 kDown, u64 kHeld)
 // * We go to the next scene = GameScreen
 void GameScreen::NextScene()
 {	
-	SceneManager::Instance()->ExitGame();
+	SceneManager::Instance()->ExitGame(m_taps);
 }
 
 void GameScreen::CheckBG()
